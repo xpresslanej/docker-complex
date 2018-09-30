@@ -13,7 +13,7 @@ after_success:
   - docker build -t xpresslanej/complex-nginx ./nginx
   - docker build -t xpresslanej/complex-server ./server
   - docker build -t xpresslanej/complex-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passowrd-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push xpresslanej/complex-client
   - docker push xpresslanej/complex-nginx
   - docker push xpresslanej/complex-server
