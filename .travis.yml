@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t xpresslanej/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run xpresslanej/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t xpresslanej/complex-client ./client
+  - docker build -t xpresslanej/complex-nginx ./nginx
+  - docker build -t xpresslanej/complex-server ./server
+  - docker build -t xpresslanej/complex-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --passowrd-stdin
+  - docker push xpresslanej/complex-client
+  - docker push xpresslanej/complex-nginx
+  - docker push xpresslanej/complex-server
+  - docker push xpresslanej/complex-worker
